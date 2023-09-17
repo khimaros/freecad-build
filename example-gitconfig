@@ -1,0 +1,9 @@
+[diff "freecad"]
+	command = "freecad-diff"
+	binary = true
+
+[difftool "freecad"]
+	cmd = "freecad-difftool \"$LOCAL\" \"$REMOTE\""
+
+[difftool]
+	prompt = false

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -ex
+
+TOOL_DIR="$(dirname $(realpath "$0"))"
+
+export FREECAD_USER_HOME=$(mktemp -d /tmp/freecad.XXXXXXX)
+
+freecadcmd -c 'import FreeCADGui as Gui; Gui.setupWithoutGUI()'
+
+${TOOL_DIR}/freecad-export.py "$@"
+
+rm -rf "${FREECAD_USER_HOME}"

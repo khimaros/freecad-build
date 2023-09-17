@@ -1,0 +1,30 @@
+import FreeCAD
+
+def find_labeled_part(doc, label):
+    print('### finding part with label', label)
+    found = doc.findObjects(Label=label)
+    if found:
+        print('### found labeled part')
+        return found[0]
+
+    return None
+
+doc = Gui.ActiveDocument.Document
+
+Gui.Selection.addSelection('Unnamed','Unnamed2')
+Gui.SendMsgToActiveView("ViewSelection")
+doc.Unnamed2.Label = 'Differences'
+
+modified = find_labeled_part(doc, 'Modified')
+modified.ViewObject.Visibility = False
+
+previous = find_labeled_part(doc, 'Previous')
+previous.ViewObject.Visibility = False
+
+additions = find_labeled_part(doc, 'Additions')
+if additions:
+    additions.ViewObject.ShapeColor = (0.00,1.00,0.00)
+
+subtractions = find_labeled_part(doc, 'Subtractions')
+if subtractions:
+    subtractions.ViewObject.ShapeColor = (1.00,0.00,0.00)

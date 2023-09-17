@@ -1,0 +1,5 @@
+# diff FreeCAD files using zip.
+#*.FCStd diff=zip
+
+# diff FreeCAD files part differ
+*.FCStd diff=freecad
