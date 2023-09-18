@@ -6,6 +6,8 @@ this repository contains standalone tools for converting FCStd files into a vari
 
 it also serves as a sort of template repository for creating build tooling around a FreeCAD project. the included `Makefile` could be copied to another repository verbatim.
 
+![screenshot of visual mesh diff](screenshot.png)
+
 ## usage
 
 build STEP files for all FCStd files in a repository:
