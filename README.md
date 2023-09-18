@@ -65,5 +65,6 @@ that's it!
 ## limitations
 
 - these tools were tested with Debian Trixie and FreeCAD version 0.20.2
+- **sub**-assemblies of an assembly are not currently included diffs or exports
 - if a part is modified but its parent assembly is not saved, the assembly diff will be empty
 - if you use `git difftool` on a single file, no other modified files will be part of the diff context
