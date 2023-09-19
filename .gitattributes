@@ -2,7 +2,7 @@
 #*.FCStd diff=zip
 
 # diff FreeCAD files part differ
-#*.FCStd diff=freecad-isolated
+#*.FCStd diff=freecad
 
 # notify the user to use git difftool instead
 *.FCStd diff=freecad-notice
