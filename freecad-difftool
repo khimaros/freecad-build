@@ -2,6 +2,8 @@
 
 set -e
 
+echo ">>> starting freecad-difftool $@"
+
 FREECAD=freecadcmd
 [[ -n "$INTERACTIVE" ]] && FREECAD="env XDG_SESSION_TYPE= freecad"
 
@@ -11,7 +13,7 @@ PREVIOUS_DIR="$1"
 MODIFIED_DIR="$2"
 
 if ! [[ "$PREVIOUS_DIR" =~ "left/" ]] || ! [[ "$MODIFIED_DIR" =~ "right/" ]]; then
-	echo "difftool must be executed in dirdiff mode (-d)"
+	echo "ERROR: diff FCStd files by running: git difftool --tool=freecad -d"
 	exit 1
 fi
 

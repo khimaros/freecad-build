@@ -1,6 +1,8 @@
 #!/bin/sh
 
-set -ex
+set -e
+
+echo ">>> starting freecad-export $@"
 
 FREECAD=freecadcmd
 [[ -n "$INTERACTIVE" ]] && FREECAD="env XDG_SESSION_TYPE= freecad"
