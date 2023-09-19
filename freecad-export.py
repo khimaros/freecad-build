@@ -1,3 +1,5 @@
+#!/usr/bin/env freecadcmd
+
 import sys
 
 from common import load_parts, fuse_parts, count_parts, export_parts
@@ -6,6 +8,10 @@ EXPORT_FUSED = True
 
 
 def main():
+    if len(sys.argv) != 3:
+        print('usage: freecad-export <source> <target>')
+        sys.exit(1)
+
     path, dest = sys.argv[1:]
 
     doc, parts = load_parts(path)

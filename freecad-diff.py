@@ -1,3 +1,5 @@
+#!/usr/bin/env freecadcmd
+
 import sys
 
 from common import load_parts, export_parts, find_labeled_part
@@ -6,6 +8,10 @@ import FreeCAD
 
 
 def main():
+    if len(sys.argv) != 4:
+        print('usage: freecad-diff <part1> <part2> <output>')
+        sys.exit(1)
+
     path1, path2, path3 = sys.argv[1:]
 
     doc1, parts1 = load_parts(path1)

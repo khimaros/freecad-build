@@ -92,13 +92,21 @@ build a specific STEP file:
 make examples/example-assembly.step
 ```
 
-NOTE: as usual with `make`, target files will only be rebuilt if the source file changes on subsequent runs.
+NOTE: as usual with `make`, target files will only be rebuilt on subsequent runs if the source file has changed.
 
 generate 3MF or Gcode for a part:
 
 ```shell
 make examples/example-assembly.3mf
 make examples/example-assembly.gcode
+```
+
+other file formats are supported by `freecad-export`, but would need to be added to the `Makefile`.
+
+here's an example using `freecad-export` directly:
+
+```shell
+freecad-export examples/example-assembly.FCStd examples/example-assembly.iges
 ```
 
 ## integration
@@ -114,6 +122,8 @@ if you didn't configure globally, add the contents of `example-gitconfig` to `.g
 if you want to enable diffing with `git diff`, copy `.gitattributes` to the project repository and uncomment one of the filters.
 
 NOTE: `git diff` copies and diffs a single file at a time, so if you are making use of `App::Link` in your assemblies, the diff of the assembly will not reflect changes to linked parts.
+
+take a look at `.gitignore` and potentially copy that to your repository.
 
 that's it!
 
