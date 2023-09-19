@@ -47,7 +47,8 @@ cat gitconfig-example >> ~/.gitconfig
 append this directory to your `$PATH` in `~/.bashrc` or symlink the tools you need into an existing `$PATH` directory.
 
 ```shell
-echo 'PATH="${PATH}:${PWD}"' >> ~/.bashrc
+echo 'export PATH="${PATH}:'"${PWD}"'"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ## integrate
