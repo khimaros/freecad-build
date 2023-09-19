@@ -1,5 +1,3 @@
-#!/usr/bin/env freecadcmd
-
 import sys
 
 from common import load_parts, export_parts, find_labeled_part
@@ -56,7 +54,7 @@ def main():
 
     export_parts(exports, path3)
 
-    sys.exit(0)
+    #sys.exit(0)
 
 
 if __name__ == 'freecad-diff':

@@ -1,5 +1,3 @@
-#!/usr/bin/env freecadcmd
-
 import sys
 
 from common import load_parts, fuse_parts, count_parts, export_parts
@@ -19,7 +17,7 @@ def main():
     else:
         export_parts(parts, dest)
 
-    sys.exit(0)
+    #sys.exit(0)
 
 
 if __name__ == 'freecad-export':

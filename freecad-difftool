@@ -2,7 +2,10 @@
 
 set -e
 
-TOOL_DIR="$(dirname $(realpath "$0"))"
+FREECAD=freecadcmd
+[[ -n "$INTERACTIVE" ]] && FREECAD="env XDG_SESSION_TYPE= freecad"
+
+BASEDIR="$(dirname $(realpath "$0"))"
 
 if [[ "$GIT_DIFFTOOL_DIRDIFF" != "true" ]]; then
 	echo "difftool must be executed in dirdiff mode (-d)"
@@ -34,14 +37,14 @@ for MOD in ${MODIFIED[@]}; do
 
 	freecadcmd -c 'import FreeCADGui as Gui; Gui.setupWithoutGUI()'
 
-	${TOOL_DIR}/freecad-export.py "${OLD}" "${OLD_MESH}"
-	${TOOL_DIR}/freecad-export.py "${NEW}" "${NEW_MESH}"
-	${TOOL_DIR}/freecad-diff.py "$NEW_MESH" "$OLD_MESH" "$DIFF_MESH"
+	$FREECAD ${BASEDIR}/freecad-export.py "${OLD}" "${OLD_MESH}"
+	$FREECAD ${BASEDIR}/freecad-export.py "${NEW}" "${NEW_MESH}"
+	$FREECAD ${BASEDIR}/freecad-diff.py "$NEW_MESH" "$OLD_MESH" "$DIFF_MESH"
 
 	rm -rf "${FREECAD_USER_HOME}"
 
 	if [[ -f "$DIFF_MESH" ]]; then
-		XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${TOOL_DIR}/show-diff.FCMacro
+		XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${BASEDIR}/show-diff.FCMacro
 	else
 		echo "!!! failed to generate diff for $NEW in $TMP"
 		read -p 'Press ENTER to continue'

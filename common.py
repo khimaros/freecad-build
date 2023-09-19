@@ -138,7 +138,7 @@ def export_parts(parts, dest):
         import Import
         Import.export(parts, dest)
 
-    print('### export successful')
+    print('### export to', dest, 'successful')
 
 
 def fuse_parts(doc, parts):
