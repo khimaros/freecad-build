@@ -7,13 +7,13 @@ FREECAD=freecadcmd
 
 BASEDIR="$(dirname $(realpath "$0"))"
 
-if [[ "$GIT_DIFFTOOL_DIRDIFF" != "true" ]]; then
+PREVIOUS_DIR="$1"
+MODIFIED_DIR="$2"
+
+if ! [[ "$PREVIOUS_DIR" =~ "left/" ]] || ! [[ "$MODIFIED_DIR" =~ "right/" ]]; then
 	echo "difftool must be executed in dirdiff mode (-d)"
 	exit 1
 fi
-
-PREVIOUS_DIR="$1"
-MODIFIED_DIR="$2"
 
 MODIFIED=$(find "$MODIFIED_DIR" -name "*.FCStd")
 

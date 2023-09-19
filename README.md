@@ -8,27 +8,7 @@ it also serves as a sort of template repository for creating build tooling aroun
 
 ![screenshot of visual mesh diff](screenshot.png)
 
-## usage
-
-build STEP files for all FCStd files in a repository:
-
-```shell
-make step
-```
-
-build a specific step file:
-
-```shell
-make examples/example-assembly.step
-```
-
-visually diff all modified FreeCAD parts and assemblies in a repository (assumes that at least one FCStd file has been mmodified, otherwise nothing will happen):
-
-```shell
-git difftool -d --tool=freecad
-```
-
-## prepare
+# quick start
 
 install dependencies:
 
@@ -38,32 +18,13 @@ apt install git rsync make freecad
 
 clone this repository to a known location.
 
-add the contents of [example-gitconfig](example-gitconfig) to `.git/config` in your FreeCAD project repo or to `~/.gitconfig` for global:
+make a small change to `examples/example-part.FCStd`
+
+execute the following to see a visual diff:
 
 ```shell
-cat gitconfig-example >> ~/.gitconfig
+git difftool -x ./freecad-difftool -d
 ```
-
-append this directory to your `$PATH` in `~/.bashrc` or symlink the tools you need into an existing `$PATH` directory.
-
-```shell
-echo 'export PATH="${PATH}:'"${PWD}"'"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-## integrate
-
-these tools can be integrated into your own new or existing FreeCAD project repository.
-
-create a repository to house your FreeCAD project files.
-
-copy the `Makefile` from this repository into the project repository.
-
-copy `.gitattributes` to the project repository. if you'd like to enable diffing with `git diff`, uncomment one of the filters. all are commented out by default.
-
-add the contents of `example-gitconfig` to `.git/config` in the project repository (if you didn't do so globally before).
-
-that's it!
 
 ## limitations
 
@@ -71,3 +32,62 @@ that's it!
 - **sub**-assemblies of an assembly are not currently included diffs or exports
 - if a part is modified but its parent assembly is not saved, the assembly diff will be empty
 - if you use `git difftool` on a single file, no other modified files will be part of the diff context
+
+## installation
+
+NOTE: you can continue using the `git difftool -x` method above without installing, however, the `Makefile` and further instructions assume that you have followed the steps below.
+
+add the contents of [example-gitconfig](example-gitconfig) to `~/.gitconfig`:
+
+```shell
+cat gitconfig-example >> ~/.gitconfig
+```
+
+NOTE: alternatively, add to `.git/config` of each repo you want to enable this in.
+
+append this directory to your `$PATH` in `~/.bashrc`
+
+```shell
+echo 'export PATH="${PATH}:'"${PWD}"'"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+NOTE: alternatively, symlink the tools (`freecad-diff freecad-difftool freecad-export freecad-diff.py freecad-export.py show-diff.FCMacro`) you need into an existing `$PATH` directory such as /usr/local/bin/.
+
+## usage
+
+build STEP files for any present FCStd files:
+
+```shell
+make step
+```
+
+build a specific STEP file:
+
+```shell
+make examples/example-assembly.step
+```
+
+NOTE: as usual with `make`, target files will only be rebuilt if the source file changes on subsequent runs.
+
+visually diff all modified FreeCAD parts and assemblies in a repository (assumes that at least one FCStd file has been mmodified, otherwise nothing will happen):
+
+```shell
+git difftool -d --tool=freecad
+```
+
+## integration
+
+these tools can be integrated into your own new or existing FreeCAD project repository.
+
+create a repository to house your FreeCAD project files.
+
+copy the `Makefile` from this repository into the project repository.
+
+if you didn't configure globally, add the contents of `example-gitconfig` to `.git/config` in the project repository.
+
+if you want to enable diffing with `git diff`, copy `.gitattributes` to the project repository and uncomment one of the filters.
+
+NOTE: `git diff` copies and diffs a single file at a time, so if you are making use of `App::Link` in your assemblies, the diff of the assembly will not reflect changes to linked parts.
+
+that's it!
