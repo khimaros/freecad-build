@@ -12,9 +12,9 @@ def find_labeled_part(doc, label):
 doc = Gui.ActiveDocument.Document
 
 Gui.ActiveDocument.ActiveView.viewIsometric()
-Gui.Selection.addSelection('Unnamed','Unnamed2')
-Gui.SendMsgToActiveView("ViewSelection")
+Gui.SendMsgToActiveView("ViewFit")
 Gui.Selection.clearSelection()
+
 doc.Unnamed2.Label = 'Differences'
 
 modified = find_labeled_part(doc, 'Modified')
