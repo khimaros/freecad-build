@@ -3,3 +3,6 @@
 
 # diff FreeCAD files part differ
 #*.FCStd diff=freecad-isolated
+
+# notify the user to use git difftool instead
+*.FCStd diff=freecad-notice
