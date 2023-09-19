@@ -2,4 +2,4 @@
 #*.FCStd diff=zip
 
 # diff FreeCAD files part differ
-*.FCStd diff=freecad
+#*.FCStd diff=freecad-isolated

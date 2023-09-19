@@ -41,7 +41,7 @@ clone this repository to a known location.
 add the contents of [example-gitconfig](example-gitconfig) to `.git/config` in your FreeCAD project repo or to `~/.gitconfig` for global:
 
 ```shell
-cat example-gitconfig >> ~/.gitconfig
+cat gitconfig-example >> ~/.gitconfig
 ```
 
 append this directory to your `$PATH` in `~/.bashrc` or symlink the tools you need into an existing `$PATH` directory.
@@ -58,7 +58,7 @@ create a repository to house your FreeCAD project files.
 
 copy the `Makefile` from this repository into the project repository.
 
-copy `.gitattributes` to the project repository.
+copy `.gitattributes` to the project repository. if you'd like to enable diffing with `git diff`, uncomment one of the filters. all are commented out by default.
 
 add the contents of `example-gitconfig` to `.git/config` in the project repository (if you didn't do so globally before).
 
