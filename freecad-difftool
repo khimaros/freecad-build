@@ -20,12 +20,9 @@ for MOD in ${MODIFIED[@]}; do
 	TMP=$(mktemp -d /tmp/meshdiff.XXXXXXXX)
 
 	mkdir -p "${TMP}/previous/"
-	#rsync -rt --exclude=.git --exclude-from=.gitignore "${GIT_WORK_TREE}/" "${TMP}/previous/"
 	rsync -rtv "${PREVIOUS_DIR}/" "${TMP}/previous/"
-
 	mkdir -p "${TMP}/modified/"
 	rsync -rt --exclude=.git --exclude-from=.gitignore "${GIT_WORK_TREE}/" "${TMP}/modified/"
-	#rsync -rtv "${MODIFIED_DIR}/" "${TMP}/modified/"
 
 	OLD="${TMP}/previous/${RELPATH}"
 	NEW="${TMP}/modified/${RELPATH}"
@@ -44,7 +41,6 @@ for MOD in ${MODIFIED[@]}; do
 	rm -rf "${FREECAD_USER_HOME}"
 
 	if [[ -f "$DIFF_MESH" ]]; then
-		unset FREECAD_USER_HOME
 		XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${TOOL_DIR}/show-diff.FCMacro
 	else
 		echo "!!! failed to generate diff for $NEW in $TMP"

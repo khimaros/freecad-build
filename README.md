@@ -33,7 +33,7 @@ git difftool -d --tool=freecad
 install dependencies:
 
 ```shell
-apt install git make freecad
+apt install git rsync make freecad
 ```
 
 clone this repository to a known location.

@@ -16,30 +16,26 @@ freecadcmd -c 'import FreeCADGui as Gui; Gui.setupWithoutGUI()'
 
 TMP=$(mktemp -d /tmp/meshdiff.XXXXXXXX)
 
-cp -r "${MODIFIED_DIR}" "${TMP}/modified"
-cp -r "${MODIFIED_DIR}" "${TMP}/previous"
-
-cp -r "${PREVIOUS_DIR}"/* "${TMP}/previous/"
+rsync -rt "${MODIFIED_DIR}/" "${TMP}/modified/"
+rsync -rt "${MODIFIED_DIR}/" "${TMP}/previous/"
+rsync -rt "${PREVIOUS_DIR}/" "${TMP}/previous/"
 
 OLD="${TMP}/previous/$(basename $PREVIOUS)"
 NEW="${TMP}/modified/$(basename $MODIFIED)"
-
 OLD_MESH="${TMP}/previous.step"
 NEW_MESH="${TMP}/modified.step"
-
 DIFF_MESH="${TMP}/diff-output.step"
 
 ${TOOL_DIR}/freecad-export.py "${OLD}" "${OLD_MESH}"
 ${TOOL_DIR}/freecad-export.py "${NEW}" "${NEW_MESH}"
-
 ${TOOL_DIR}/freecad-diff.py "$NEW_MESH" "$OLD_MESH" "$DIFF_MESH"
 
 rm -rf "${FREECAD_USER_HOME}"
 
 if [[ -f "$DIFF_MESH" ]]; then
-        unset FREECAD_USER_HOME
         XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${TOOL_DIR}/show-diff.FCMacro
-        rm -rf "$TMP"
 else
-        echo "!!! failed to generate diff at $TMP"
+        echo "!!! failed to generate diff for $NEW in $TMP"
 fi
+
+rm -rf "$TMP"
