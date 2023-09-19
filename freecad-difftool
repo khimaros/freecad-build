@@ -20,7 +20,7 @@ for MOD in ${MODIFIED[@]}; do
 	TMP=$(mktemp -d /tmp/meshdiff.XXXXXXXX)
 
 	mkdir -p "${TMP}/previous/"
-	rsync -rtv "${PREVIOUS_DIR}/" "${TMP}/previous/"
+	rsync -rt "${PREVIOUS_DIR}/" "${TMP}/previous/"
 	mkdir -p "${TMP}/modified/"
 	rsync -rt --exclude=.git --exclude-from=.gitignore "${GIT_WORK_TREE}/" "${TMP}/modified/"
 
