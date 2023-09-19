@@ -28,10 +28,10 @@ git difftool -x ./freecad-difftool -d
 
 ## limitations
 
-- these tools were tested with Debian Trixie and FreeCAD version 0.20.2
-- **sub**-assemblies of an assembly are not currently included diffs or exports
-- if a part is modified but its parent assembly is not saved, the assembly diff will be empty
-- if you use `git difftool` on a single file, no other modified files will be part of the diff context
+- these tools have only been tested with Debian Trixie and FreeCAD version 0.20.2
+- **sub**-assemblies of an assembly are not currently included diffs or exports (this is on the roadmap)
+- if a part is modified but its parent assembly is not subsequently saved, the assembly diff will be skipped by git
+- if you use `git difftool` on a single file (or if you use the `git diff` integration), modified files are diffed one by one, which means changes to `App::Link` parts in other files will not be reflected.
 
 ## installation
 
@@ -56,7 +56,31 @@ NOTE: alternatively, symlink the tools (`freecad-diff freecad-difftool freecad-e
 
 ## usage
 
-build STEP files for any present FCStd files:
+### diff
+
+NOTE: the following assumes that at least one FCStd file has been mmodified, otherwise nothing will happen:
+
+visually diff all modified FreeCAD parts and assemblies in the repository:
+
+```shell
+git difftool -d --tool=freecad
+```
+
+after a weight relative to the complexity of the exported part, a FreeCAD window will open with at least two and at most four features.
+
+**Previous**: the exported part from HEAD
+
+**Modified**: the exported part including modifications in your worktree
+
+**Additions**: any geometry which was added by your modifications (green)
+
+**Subtractions**: any geometry which was removed by your modifications (red)
+
+NOTE: the first two features are always present, the others are present only if the diff is non-empty
+
+### export
+
+export STEP files for any present FCStd files:
 
 ```shell
 make step
@@ -70,10 +94,11 @@ make examples/example-assembly.step
 
 NOTE: as usual with `make`, target files will only be rebuilt if the source file changes on subsequent runs.
 
-visually diff all modified FreeCAD parts and assemblies in a repository (assumes that at least one FCStd file has been mmodified, otherwise nothing will happen):
+generate 3MF or Gcode for a part:
 
 ```shell
-git difftool -d --tool=freecad
+make examples/example-assembly.3mf
+make examples/example-assembly.gcode
 ```
 
 ## integration
@@ -91,3 +116,9 @@ if you want to enable diffing with `git diff`, copy `.gitattributes` to the proj
 NOTE: `git diff` copies and diffs a single file at a time, so if you are making use of `App::Link` in your assemblies, the diff of the assembly will not reflect changes to linked parts.
 
 that's it!
+
+## troubleshooting
+
+check the log output on the console, make sure there are no `recompute` errors.
+
+inspect the **Modified** and **Previous** features to make sure they look as expected.
