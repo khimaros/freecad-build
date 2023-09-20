@@ -23,13 +23,13 @@ gcode: $(PARTS_GCODE)
 .PHONY: gcode
 
 %.step: %.FCStd
-	./freecad-export "$<" "$@"
+	freecad-export "$<" "$@"
 
 %.dxf: %.FCStd
-	./freecad-export "$<" "$@"
+	freecad-export "$<" "$@"
 
 %.3mf: %.FCStd
-	./freecad-export "$<" "$@"
+	freecad-export "$<" "$@"
 
 %.gcode: %.3mf
 	#prusa-slicer --export-gcode "$<"
