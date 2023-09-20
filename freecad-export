@@ -7,12 +7,12 @@ echo ">>> starting freecad-export $@"
 FREECAD=freecadcmd
 [[ -n "$INTERACTIVE" ]] && FREECAD="env XDG_SESSION_TYPE= freecad"
 
-BASEDIR="$(dirname $(realpath "$0"))"
+BINARY_DIR="$(dirname $(realpath "$0"))"
 
 export FREECAD_USER_HOME=$(mktemp -d /tmp/freecad.XXXXXXX)
 
 freecadcmd -c 'import FreeCADGui as Gui; Gui.setupWithoutGUI()'
 
-$FREECAD ${BASEDIR}/freecad-export.py "$@"
+$FREECAD ${BINARY_DIR}/freecad-export.py "$@"
 
 rm -rf "${FREECAD_USER_HOME}"

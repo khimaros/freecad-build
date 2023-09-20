@@ -7,7 +7,11 @@ echo ">>> starting freecad-difftool $@"
 FREECAD=freecadcmd
 [[ -n "$INTERACTIVE" ]] && FREECAD="env XDG_SESSION_TYPE= freecad"
 
-BASEDIR="$(dirname $(realpath "$0"))"
+BINARY_DIR="$(dirname $(realpath "$0"))"
+MACROS_DIR="$BINARY_DIR"
+if [[ "$BINARY_DIR" = "/usr/local/bin" ]]; then
+	MACROS_DIR="/usr/share/freecad/Macro"
+fi
 
 PREVIOUS_DIR="$1"
 MODIFIED_DIR="$2"
@@ -39,14 +43,14 @@ for MOD in ${MODIFIED[@]}; do
 
 	freecadcmd -c 'import FreeCADGui as Gui; Gui.setupWithoutGUI()'
 
-	$FREECAD ${BASEDIR}/freecad-export.py "${OLD}" "${OLD_MESH}"
-	$FREECAD ${BASEDIR}/freecad-export.py "${NEW}" "${NEW_MESH}"
-	$FREECAD ${BASEDIR}/freecad-diff.py "$NEW_MESH" "$OLD_MESH" "$DIFF_MESH"
+	$FREECAD ${BINARY_DIR}/freecad-export.py "${OLD}" "${OLD_MESH}"
+	$FREECAD ${BINARY_DIR}/freecad-export.py "${NEW}" "${NEW_MESH}"
+	$FREECAD ${BINARY_DIR}/freecad-diff.py "$NEW_MESH" "$OLD_MESH" "$DIFF_MESH"
 
 	rm -rf "${FREECAD_USER_HOME}"
 
 	if [[ -f "$DIFF_MESH" ]]; then
-		XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${BASEDIR}/show-diff.FCMacro
+		XDG_SESSION_TYPE= freecad "$DIFF_MESH" ${MACROS_DIR}/show-diff.FCMacro
 	else
 		echo "!!! failed to generate diff for $NEW in $TMP"
 		read -p 'Press ENTER to continue'

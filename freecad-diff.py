@@ -2,7 +2,7 @@
 
 import sys
 
-from common import load_parts, export_parts, find_labeled_part
+from freecad_build import load_parts, export_parts, find_labeled_part
 
 import FreeCAD
 

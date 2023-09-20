@@ -2,7 +2,7 @@
 
 import sys
 
-from common import load_parts, fuse_parts, count_parts, export_parts
+from freecad_build import load_parts, fuse_parts, count_parts, export_parts
 
 EXPORT_FUSED = True
 

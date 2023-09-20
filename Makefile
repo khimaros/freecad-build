@@ -1,41 +1,22 @@
-PARTS := $(wildcard **/*.FCStd)
+BINARY := freecad-export freecad-diff freecad-difftool freecad-export.py freecad-diff.py
+COMMON := freecad_build.py
+MACROS := show-diff.FCMacro
 
-PARTS_STEP := $(addsuffix .step, $(basename $(PARTS)))
-PARTS_DXF := $(addsuffix .dxf, $(basename $(PARTS)))
-PARTS_3MF := $(addsuffix .3mf, $(basename $(PARTS)))
-PARTS_GCODE := $(addsuffix .gcode, $(basename $(PARTS)))
-
-PARTS_CLEAN := $(wildcard **/*.step **/*.dxf **/*.3mf **/*.gcode **/*.FCBak)
-
-all: step 3mf gcode
+all:
+	@echo "run 'sudo make install' to install system wide"
 .PHONY: all
 
-step: $(PARTS_STEP)
-.PHONY: step
+install:
+	mkdir -p /usr/local/bin/
+	cp -v $(BINARY) /usr/local/bin/
+	mkdir -p /usr/share/freecad/Ext/freecad_build/
+	cp -v $(COMMON) /usr/share/freecad/Ext/freecad_build/__init__.py
+	mkdir -p /usr/share/freecad/Macro/
+	cp -v $(MACROS) /usr/share/freecad/Macro/
+.PHONY: install
 
-dxf: $(PARTS_DXF)
-.PHONY: dxf
-
-3mf: $(PARTS_3MF)
-.PHONY: 3mf
-
-gcode: $(PARTS_GCODE)
-.PHONY: gcode
-
-%.step: %.FCStd
-	freecad-export "$<" "$@"
-
-%.dxf: %.FCStd
-	freecad-export "$<" "$@"
-
-%.3mf: %.FCStd
-	freecad-export "$<" "$@"
-
-%.gcode: %.3mf
-	#prusa-slicer --export-gcode "$<"
-	#slic3r --no-gui --duplicate 6 "$<"
-	slic3r --no-gui "$<"
-
-clean:
-	rm -f $(PARTS_CLEAN)
-.PHONY: clean
+uninstall:
+	cd /usr/local/bin/ && rm -v $(BINARY)
+	rm -rfv /usr/share/freecad/Ext/freecad_build/
+	cd /usr/share/freecad/Macro/ && rm -v $(MACROS)
+.PHONY: uninstall
