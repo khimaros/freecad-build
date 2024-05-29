@@ -8,11 +8,12 @@ EXPORT_FUSED = True
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
+        print('error: expected 4 arguments, received', len(sys.argv))
         print('usage: freecad-export <source> <target>')
         sys.exit(1)
 
-    path, dest = sys.argv[1:]
+    path, dest = sys.argv[2:]
 
     doc, parts = load_parts(path)
 

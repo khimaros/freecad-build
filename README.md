@@ -1,6 +1,6 @@
 # FREECAD BUILD
 
-command line tools for working with FreeCAD files, including visual mesh diffs and headless part export
+command line tools for working with FreeCAD files, including visual mesh diffs and headless part export.
 
 ![screenshot of visual mesh diff](screenshot.png)
 
@@ -12,7 +12,7 @@ command line tools for working with FreeCAD files, including visual mesh diffs a
 
 ## limitations
 
-- these tools have only been tested with Debian Trixie and FreeCAD version 0.20.2
+- these tools have only been tested with Debian Trixie and FreeCAD version 0.21.2
 - **sub**-assemblies of an assembly are not currently included diffs or exports (this is on the roadmap)
 - if a part is modified but its parent assembly is not subsequently saved, the assembly diff will be skipped by git
 
@@ -59,9 +59,13 @@ freecad-export path/to/my.FCStd path/to/my.step
 show the differences between two STEP files:
 
 ```shell
-freecad-diff.py path/to/left.step path/to/right.step
+freecad-diff path/to/left.step path/to/right.step
 ```
 
 ## troubleshooting
 
 check the log output on the console, make sure there are no `recompute` errors.
+
+inspect the **Modified** and **Previous** features to make sure they look as expected.
+
+run the build in interactive mode, `export INTERACTIVE=1` before invoking

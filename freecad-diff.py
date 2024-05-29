@@ -8,11 +8,12 @@ import FreeCAD
 
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
+        print('error: expected 5 arguments, received', len(sys.argv))
         print('usage: freecad-diff <part1> <part2> <output>')
         sys.exit(1)
 
-    path1, path2, path3 = sys.argv[1:]
+    path1, path2, path3 = sys.argv[2:]
 
     doc1, parts1 = load_parts(path1)
     part1 = parts1[0]
